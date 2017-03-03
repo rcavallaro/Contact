@@ -4,6 +4,7 @@ package com.rickcavallaro.contact;
  * Created by Rick on 2/23/2017.
  */
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,11 +35,22 @@ public class AddressBookFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateUI();
+    }
+
     private void updateUI() {
         AddressBook addressBook = AddressBook.get();
         List<Contact> contacts = addressBook.getContacts();
-        mContactAdapter = new ContactAdapter(contacts);
-        mAddressBookRecyclerView.setAdapter(mContactAdapter);
+        if (mContactAdapter == null) {
+            mContactAdapter = new ContactAdapter(contacts);
+            mAddressBookRecyclerView.setAdapter(mContactAdapter);
+        }
+        else {
+            mContactAdapter.notifyDataSetChanged();
+        }
     }
 
     private class ContactHolder extends RecyclerView.ViewHolder
@@ -61,6 +73,8 @@ public class AddressBookFragment extends Fragment {
         public void onClick(View v) {
             Toast.makeText(getActivity(), mContact.getName() + " clicked.",
                     Toast.LENGTH_SHORT).show();
+            Intent intent = ContactPagerActivity.newIntent(getActivity(), mContact.getID());
+            startActivity(intent);
         }
     }
 
@@ -82,6 +96,7 @@ public class AddressBookFragment extends Fragment {
         @Override
         public void onBindViewHolder(ContactHolder holder, int position) {
             Contact contact = mContacts.get(position);
+            //holder.mContactNameTextView.setText(contact.getName());
             holder.bindContact(contact);
         }
 
