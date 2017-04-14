@@ -4,6 +4,7 @@ package com.rickcavallaro.contact;
  * Created by Rick on 2/9/2017.
  */
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import java.util.UUID;
@@ -14,13 +15,26 @@ public class Contact {
     private String mName;
     private String mEmail;
     private boolean mFavorite;
+    private String mAddress;
+    private Bitmap mImage;
+
+    public Bitmap getImage() {
+        return mImage;
+    }
+
+    public void setImage(Bitmap mImage) {
+        this.mImage = mImage;
+    }
 
     public boolean isFavorite() {
         return mFavorite;
     }
 
     public Contact() {
-        mID = UUID.randomUUID();
+        this(UUID.randomUUID());
+    }
+    public Contact(UUID id) {
+        mID = id;
     }
 
     public UUID getID() {
@@ -49,4 +63,13 @@ public class Contact {
         Log.i(TAG, "New Favorite: " + favorite);
         mFavorite = favorite;
     }
+
+    public String getAddress() {
+        return mAddress;
+    }
+
+    public void setAddress(String address) {
+        mAddress = address;
+    }
 }
+

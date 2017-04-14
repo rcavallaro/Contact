@@ -28,7 +28,7 @@ public class ContactBaseHelper extends SQLiteOpenHelper {
                 ContactDbSchema.ContactTable.Cols.EMAIL + ", " +
                 ContactDbSchema.ContactTable.Cols.FAVORITE + ", " +
                 ContactDbSchema.ContactTable.Cols.ADDRESS + ", " +
-                ContactDbSchema.ContactTable.Cols.IMAGE + ", " +
+                ContactDbSchema.ContactTable.Cols.IMAGE +
                 ")";
         sqLiteDatabase.execSQL(sql);
     }

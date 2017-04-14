@@ -8,4 +8,6 @@
           app:showAsAction="ifRoom|withText"/>
     <item android:title="@string/show_favorites"
           android:id="@+id/menu_item_toggle_favorites"/>
+    <item android:title="@string/send_email"
+          android:id="@+id/menu_item_send_email"/>
 </menu>

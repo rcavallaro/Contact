@@ -2,6 +2,7 @@ package com.rickcavallaro.contact;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -9,6 +10,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.List;
 import java.util.UUID;
@@ -21,6 +24,11 @@ public class ContactPagerActivity extends AppCompatActivity {
     private static final String EXTRA_CONTACT_ID = "com.rickcavallaro.contacts.contact_id";
     private ViewPager mViewPager;
     private List<Contact> mContacts;
+    /*
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient mClient;
 
     public static Intent newIntent(Context packageContext, UUID contactID) {
         Intent intent = new Intent(packageContext, ContactPagerActivity.class);
@@ -58,5 +66,18 @@ public class ContactPagerActivity extends AppCompatActivity {
                 break;
             }
         }
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+   }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
     }
 }
