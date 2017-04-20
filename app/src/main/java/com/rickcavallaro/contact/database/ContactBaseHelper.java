@@ -37,4 +37,9 @@ public class ContactBaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
     }
+
+    public static void cleanupEmptyRecords(SQLiteDatabase sqLiteDatabase) {
+        String sql = "DELETE FROM " + ContactDbSchema.ContactTable.NAME + "WHERE NAME = '' ";
+        sqLiteDatabase.execSQL(sql);
+    }
 }

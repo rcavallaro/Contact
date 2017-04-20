@@ -8,6 +8,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 
 import com.rickcavallaro.contact.database.ContactBaseHelper;
@@ -96,6 +97,9 @@ public class AddressBook {
             contact1.setFavorite(true);
             sAddressBook.add(contact1);
         }
+        else {
+            //ContactBaseHelper.cleanupEmptyRecords(mDatabase);
+        }
 
         return sAddressBook;
     }
@@ -121,7 +125,24 @@ public class AddressBook {
     }
 
     public List<Contact> getContacts() {
-        return new ArrayList<>(); //mContacts;
+        List<Contact> contacts = new ArrayList<>();
+        // get only contacts with favorite == 1
+        ContactCursorWrapper cursorWrapper = queryContacts(null, null);
+        try {
+            if (cursorWrapper.getCount() == 0) {
+                return contacts;
+            }
+            cursorWrapper.moveToFirst();
+            while (!cursorWrapper.isAfterLast()) {
+                contacts.add(cursorWrapper.getContact());
+                cursorWrapper.moveToNext();
+            }
+        }
+        finally {
+            cursorWrapper.close();
+        }
+        return contacts;
+        //return new ArrayList<>(); //favorites;
     }
 
     public Contact getContact(UUID id) {
@@ -186,10 +207,10 @@ public class AddressBook {
         return values;
     }
 
-    private Cursor queryContacts(String whereClause, String[] whereArgs) {
-        return mDatabase.query(ContactDbSchema.ContactTable.NAME, null, whereClause, whereArgs,
-                null, null, null, null);
-    }
+//    private Cursor queryContacts(String whereClause, String[] whereArgs) {
+//        return mDatabase.query(ContactDbSchema.ContactTable.NAME, null, whereClause, whereArgs,
+//                null, null, null, null);
+//    }
 
     private ContactCursorWrapper queryContacts(String whereClause, String[] whereArgs)
     {

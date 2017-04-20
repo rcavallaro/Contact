@@ -24,11 +24,11 @@ public class ContactCursorWrapper extends CursorWrapper {
         return getString(getColumnIndex(columnName));
     }
     public Contact getContact() {
-        String uuid = getColumnData(ContactTable.Cols.UUID));
-        String name = getColumnData(ContactTable.Cols.NAME));
-        String email = getColumnData(ContactTable.Cols.EMAIL));
-        String favorite = getColumnData(ContactTable.Cols.FAVORITE));
-        String address = getColumnData(ContactTable.Cols.ADDRESS));
+        String uuid = getColumnData(ContactTable.Cols.UUID);
+        String name = getColumnData(ContactTable.Cols.NAME);
+        String email = getColumnData(ContactTable.Cols.EMAIL);
+        String favorite = getColumnData(ContactTable.Cols.FAVORITE);
+        String address = getColumnData(ContactTable.Cols.ADDRESS);
         byte[] imageData = getBlob(getColumnIndex(ContactTable.Cols.IMAGE));
         // convert the byte array into a Bitmap
         Bitmap image = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);

@@ -4,6 +4,7 @@ package com.rickcavallaro.contact;
  * Created by Rick on 2/23/2017.
  */
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -24,6 +25,21 @@ public class AddressBookFragment extends Fragment {
     private RecyclerView mAddressBookRecyclerView;
     private ContactAdapter mContactAdapter;
     private boolean mShowFavoritesOnly = false;
+    private Callbacks mCallbacks;
+
+    public interface Callbacks {
+        void onContactSelected(Contact contact);
+    }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mCallbacks = (Callbacks) context;
+    }
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,8 +92,7 @@ public class AddressBookFragment extends Fragment {
             case R.id.menu_item_create_contact:
                 Contact contact = new Contact();
                 AddressBook.get(getContext()).add(contact);
-                Intent intent = ContactPagerActivity.newIntent(getActivity(), contact.getID());
-                startActivity(intent);
+                mCallbacks.onContactSelected(contact);
                 return true;
             case R.id.menu_item_toggle_favorites:
                 mShowFavoritesOnly = !mShowFavoritesOnly;
@@ -116,8 +131,7 @@ public class AddressBookFragment extends Fragment {
         public void onClick(View v) {
             Toast.makeText(getActivity(), mContact.getName() + " clicked.",
                     Toast.LENGTH_SHORT).show();
-            Intent intent = ContactPagerActivity.newIntent(getActivity(), mContact.getID());
-            startActivity(intent);
+            mCallbacks.onContactSelected(mContact);
         }
     }
 
